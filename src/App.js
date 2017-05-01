@@ -8,44 +8,58 @@ class App extends Component {
     this.state = {
       someText: 'QWEAASD',
       showText: '',
-      aaa: 111,
-      dataStock: [
-        {id:1, name: "หมู", active: false, suggest: true},
-        {id:2, name: "ไก่", active: false, suggest: true},
-        {id:3, name: "ไข่", active: false, suggest: true},
-        {id:4, name: "พืชยืนต้น", active: false, suggest: true},
-        {id:5, name: "พืชไม่ยืนต้น", active: false, suggest: true},
-        {id:6, name: "เห็ด", active: false, suggest: true},
+      idActive: 0,
+      dataSuggest: [
+        {id:1, name: "pork", active: false, suggest: false},
+        {id:2, name: "chicken", active: false, suggest: false},
+        {id:3, name: "egg", active: false, suggest: false},
+        {id:4, name: "planType1", active: false, suggest: false},
+        {id:5, name: "planType2", active: false, suggest: false},
+        {id:6, name: "Mushroom", active: false, suggest: false},
       ],
       data:[]
     }
   }
 
   add(index){
-    let data = this.state.data;
-    let obj = {name: this.state.someText , id: data.length + 1, active: true};
-    this.setState({
-      data: [...data, obj],
-      showText: this.state.someText,
-      someText: '',
-    })
+    if(this.state.someText != ''){
+      let data = this.state.data;
+      let obj = {name: this.state.someText , id: data.length + 1, active: true};
+      this.setState({
+        data: [...data, obj],
+        showText: this.state.someText,
+        someText: '',
+      })
+    }
   }
 
   activeTodo(index){
     let data = this.state.data;
     data[index-1].active = !data[index-1].active;
+    let idActive = this.state.idActive;
+    data[idActive-1].active = false;
     this.setState({
       data: data,
+      idActive: index,
     })
+    
   }
 
-  delete(index){
+  addSuggest(index){
     let data = this.state.data;
     data[index-1].active = !data[index-1].active;
     this.setState({
       data: data,
     })
   }
+
+  // delete(index){
+  //   let data = this.state.data;
+  //   data[index-1].active = !data[index-1].active;
+  //   this.setState({
+  //     data: data,
+  //   })
+  // }
 
   // delete(index){
   //   let data = this.state.data;
@@ -69,10 +83,34 @@ class App extends Component {
   // }
 
   update(e){
-    this.setState({
-      someText: e.target.value
-    });
+    if(e.target.value[0]!=' '){
+      this.setState({
+        someText: e.target.value
+      });
+    }
+    /*{
+          this.state.dataSuggest.map((obj) => <search name={obj.name}
+          id={obj.id}
+          active={obj.active}
+          activeTodo={ () => this.activeTodo(obj.id)}
+          delete={ () => this.delete(obj.id) }
+          suggest = {obj.suggest}
+          key = {obj.id}
+          keyword = {this.state.someText}
+          />)
+    }*/
   }
+
+  // search(index){
+  //   for(var i=0 ; i<keyword.length ; i++){
+  //     if(keyword[i]!=name[i]){
+  //       suggest = false;
+  //     }
+  //   }
+  //   this.setState({
+  //       dataSuggest[index-1].suggest : suggest,  
+  //     });
+  // }
 
   render(){
     return (
@@ -81,26 +119,30 @@ class App extends Component {
           type="text"
           value={this.state.someText}
           onChange={(e)=>this.update(e)} />
+        <button onClick={ ()=> this.add(this.state.data.length) }>Add</button>
+        <h1>{this.state.data.length} items add</h1>
         {
-          this.state.dataStock.map((obj) => <Suggest name={obj.name} suggest={obj.suggest}
+          this.state.dataSuggest.map((obj) => <Suggest name={obj.name}
           id={obj.id}
           active={obj.active}
           activeTodo={ () => this.activeTodo(obj.id)}
           delete={ () => this.delete(obj.id) }
-          checkSuggest = {this.state.someText}
-          key={obj.id}
+          suggest = {obj.suggest}
+          idActive = {this.state.idActive}
+          key = {obj.id}
+          keyword = {this.state.someText}
           />)
         }
-        <button onClick={ ()=> this.add(this.state.data.length}>Add</button>
         {
-          this.state.data.map((obj) => <ToDo name={obj.name} id={obj.id} active={obj.active}
+          this.state.data.map((obj) => <ToDo name={obj.name}
+          id={obj.id}
+          active={obj.active}
           activeTodo={ () => this.activeTodo(obj.id)}
           delete={ () => this.delete(obj.id) }
+          idActive = {this.state.idActive}
           key={obj.id}
           />)
         }
-        <b1>{this.state.data.length} items left</b1>
-
       </div>
     )
   }
