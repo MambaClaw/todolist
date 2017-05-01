@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 class Suggest extends Component {
+
     render(){
         let suggest = this.props.suggest;
         let length = this.props.keyword.length;
@@ -16,11 +17,8 @@ class Suggest extends Component {
         if(suggest){
             return(
                 <div style = {this.props.active ? {color: 'green'} : {color: 'black'}}>
-                    <p>{this.props.name}</p>
-                    <p>id: {this.props.id}</p>
-                    {/*<p>{this.props.active ? 'active' : 'non-active'}</p>*/}
-                    <button onClick={ () => this.props.addSuggest() }>ADD</button>
-                    <button onClick={ () => this.props.delete()}>DELETE</button>
+                    <p><button onClick={ ()=> this.props.makeActive(this.props.data) }>ACTIVE</button>  id:{this.props.id}  {this.props.name}
+                    </p>
                 </div>
             )
         } else{

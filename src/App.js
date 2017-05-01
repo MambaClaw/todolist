@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ToDo from './ToDo'
 import Suggest from './Suggest'
+import Active from './Active'
 
 class App extends Component {
   constructor(){
@@ -8,7 +9,6 @@ class App extends Component {
     this.state = {
       someText: 'QWEAASD',
       showText: '',
-      idActive: 0,
       dataSuggest: [
         {id:1, name: "pork", active: false, suggest: false},
         {id:2, name: "chicken", active: false, suggest: false},
@@ -17,18 +17,16 @@ class App extends Component {
         {id:5, name: "planType2", active: false, suggest: false},
         {id:6, name: "Mushroom", active: false, suggest: false},
       ],
-      data:[]
+      dataActive: {id:0, name: "",active:true, suggest: false}
     }
   }
 
-  add(index){
+  makeActive(data){
     if(this.state.someText != ''){
-      let data = this.state.data;
-      let obj = {name: this.state.someText , id: data.length + 1, active: true};
       this.setState({
-        data: [...data, obj],
+        dataActive: data,
         showText: this.state.someText,
-        someText: '',
+        // someText: '',
       })
     }
   }
@@ -53,53 +51,42 @@ class App extends Component {
     })
   }
 
-  // delete(index){
-  //   let data = this.state.data;
-  //   data[index-1].active = !data[index-1].active;
-  //   this.setState({
-  //     data: data,
-  //   })
-  // }
-
-  // delete(index){
-  //   let data = this.state.data;
-  //   let newData;
-  //   var j=0;
-  //   for(var i=0 ; i<data.length ;i++){
-  //     if(i=index-1){
-  //       j++;
-  //     }
-  //     newData[j] = data[i];
-  //   }
-  //   this.setState({
-  //     data: newData,
-  //   })
-  // }
-
-  // update(e){
-  //   this.setState({
-  //     someText: e.target.value
-  //   });
-  // }
-
   update(e){
     if(e.target.value[0]!=' '){
       this.setState({
         someText: e.target.value
       });
     }
-    /*{
-          this.state.dataSuggest.map((obj) => <search name={obj.name}
+  }
+
+  render(){
+    return (
+      <div>
+        <p>
+        <input
+          type="text"
+          value={this.state.someText}
+          onChange={(e)=>this.update(e)} />  search</p>
+        {/*<button onClick={ ()=> this.add(this.state.data.length) }>Add</button>*/}
+        <p>  id: {this.state.dataActive.id} {this.state.dataActive.name}</p>
+        {
+          this.state.dataSuggest.map((obj) => <Suggest name={obj.name}
           id={obj.id}
           active={obj.active}
           activeTodo={ () => this.activeTodo(obj.id)}
           delete={ () => this.delete(obj.id) }
+          makeActive={ () => this.makeActive(obj.id) }
           suggest = {obj.suggest}
+          idActive = {this.state.idActive}
           key = {obj.id}
           keyword = {this.state.someText}
+          data={obj}
           />)
-    }*/
+        }
+      </div>
+    )
   }
+}
 
   // search(index){
   //   for(var i=0 ; i<keyword.length ; i++){
@@ -112,28 +99,20 @@ class App extends Component {
   //     });
   // }
 
-  render(){
-    return (
-      <div>
-        <input
-          type="text"
-          value={this.state.someText}
-          onChange={(e)=>this.update(e)} />
-        <button onClick={ ()=> this.add(this.state.data.length) }>Add</button>
-        <h1>{this.state.data.length} items add</h1>
-        {
-          this.state.dataSuggest.map((obj) => <Suggest name={obj.name}
-          id={obj.id}
-          active={obj.active}
-          activeTodo={ () => this.activeTodo(obj.id)}
-          delete={ () => this.delete(obj.id) }
-          suggest = {obj.suggest}
-          idActive = {this.state.idActive}
-          key = {obj.id}
-          keyword = {this.state.someText}
-          />)
-        }
-        {
+
+  // add(index){
+  //   if(this.state.someText != ''){
+  //     let data = this.state.data;
+  //     let obj = {name: nameProduct , id: data.length + 1, active: true};
+  //     this.setState({
+  //       data: [...data, obj],
+  //       showText: this.state.someText,
+  //       someText: '',
+  //     })
+  //   }
+  // }
+
+  {/*{
           this.state.data.map((obj) => <ToDo name={obj.name}
           id={obj.id}
           active={obj.active}
@@ -142,10 +121,6 @@ class App extends Component {
           idActive = {this.state.idActive}
           key={obj.id}
           />)
-        }
-      </div>
-    )
-  }
-}
+        }*/}
 
 export default App;
