@@ -5,7 +5,6 @@ class Active extends Component {
         if(this.props.data.id>0){
             return(
                 <div>
-                    {/*<button onClick={ () => this.props.activeTodo() }>ACTIVE</button>*/}
                     <p>  id: {this.props.data.id} {this.props.data.name} was active  </p>
                 </div>
             )

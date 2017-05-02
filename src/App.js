@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ToDo from './ToDo'
 import Suggest from './Suggest'
 import Active from './Active'
 
@@ -24,17 +23,17 @@ class App extends Component {
   makeActive(id){
     id -= 1;
     let data = this.state.dataSuggest;
-    data[id].active = !data[id].active;
-    data[this.state.dataActive.id].active = false;
-    if(this.state.someText != ''){
-      this.setState({
-        dataActive: data[id],
-        dataSuggest: data,
-        showText: this.state.someText,
-        // someText: '',
-      })
-      console.log(this.state.dataActive.name);
+    for(let i = 0 ;i<this.state.dataSuggest.length; i++){
+      this.state.dataSuggest[i].active = false;
     }
+    data[id].active = true;
+    this.setState({
+      dataActive: data[id],
+      dataSuggest: data,
+      showText: this.state.someText,
+
+    })
+    console.log(data[id]); 
   }
 
   activeTodo(index){
@@ -73,60 +72,20 @@ class App extends Component {
           type="text"
           value={this.state.someText}
           onChange={(e)=>this.update(e)} />  search</p>
-        {/*<button onClick={ ()=> this.add(this.state.data.length) }>Add</button>*/}
         <p>  id: {this.state.dataActive.id} {this.state.dataActive.name}</p>
         {
           this.state.dataSuggest.map((obj) => <Suggest name={obj.name}
           id={obj.id}
           active={obj.active}
-          activeTodo={ () => this.activeTodo(obj.id)}
-          delete={ () => this.delete(obj.id) }
-          makeActive={ () => this.makeActive(obj.id) }
           suggest = {obj.suggest}
-          idActive = {this.state.idActive}
           key = {obj.id}
           keyword = {this.state.someText}
-          data={obj}
+          makeActive={ () => this.makeActive(obj.id) }
           />)
         }
       </div>
     )
   }
 }
-
-  // search(index){
-  //   for(var i=0 ; i<keyword.length ; i++){
-  //     if(keyword[i]!=name[i]){
-  //       suggest = false;
-  //     }
-  //   }
-  //   this.setState({
-  //       dataSuggest[index-1].suggest : suggest,  
-  //     });
-  // }
-
-
-  // add(index){
-  //   if(this.state.someText != ''){
-  //     let data = this.state.data;
-  //     let obj = {name: nameProduct , id: data.length + 1, active: true};
-  //     this.setState({
-  //       data: [...data, obj],
-  //       showText: this.state.someText,
-  //       someText: '',
-  //     })
-  //   }
-  // }
-
-  {/*{
-          this.state.data.map((obj) => <ToDo name={obj.name}
-          id={obj.id}
-          active={obj.active}
-          activeTodo={ () => this.activeTodo(obj.id)}
-          delete={ () => this.delete(obj.id) }
-          idActive = {this.state.idActive}
-          key={obj.id}
-          />)
-        }*/}
 
 export default App;
