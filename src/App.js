@@ -21,13 +21,19 @@ class App extends Component {
     }
   }
 
-  makeActive(data){
+  makeActive(id){
+    id -= 1;
+    let data = this.state.dataSuggest;
+    data[id].active = !data[id].active;
+    data[this.state.dataActive.id].active = false;
     if(this.state.someText != ''){
       this.setState({
-        dataActive: data,
+        dataActive: data[id],
+        dataSuggest: data,
         showText: this.state.someText,
         // someText: '',
       })
+      console.log(this.state.dataActive.name);
     }
   }
 
