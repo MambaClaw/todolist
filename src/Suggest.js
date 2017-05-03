@@ -15,7 +15,6 @@ class Suggest extends Component {
             }
         }
         if(suggest){
-            console.log(this.props.name + this.props.active);
             return(
                 <div style = {this.props.active ? {color: 'green'} : {color: 'black'}}>
                     <p><button onClick={ ()=> this.props.makeActive() }>ACTIVE</button>  id:{this.props.id}  {this.props.name}

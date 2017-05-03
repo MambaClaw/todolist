@@ -22,37 +22,14 @@ class App extends Component {
 
   makeActive(id){
     id -= 1;
-    let data = this.state.dataSuggest;
-    for(let i = 0 ;i<this.state.dataSuggest.length; i++){
-      this.state.dataSuggest[i].active = false;
-    }
-    data[id].active = true;
+    let data = this.state.dataSuggest.map((product, i) => 
+      i == id - 1 ? { ...product, active: true } : { ...product, active: false } 
+    );
     this.setState({
       dataActive: data[id],
       dataSuggest: data,
       showText: this.state.someText,
 
-    })
-    console.log(data[id]); 
-  }
-
-  activeTodo(index){
-    let data = this.state.data;
-    data[index-1].active = !data[index-1].active;
-    let idActive = this.state.idActive;
-    data[idActive-1].active = false;
-    this.setState({
-      data: data,
-      idActive: index,
-    })
-    
-  }
-
-  addSuggest(index){
-    let data = this.state.data;
-    data[index-1].active = !data[index-1].active;
-    this.setState({
-      data: data,
     })
   }
 
