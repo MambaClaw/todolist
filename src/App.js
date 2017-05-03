@@ -9,12 +9,12 @@ class App extends Component {
       someText: 'QWEAASD',
       showText: '',
       dataSuggest: [
-        {id:1, name: "pork", active: false, suggest: false},
-        {id:2, name: "chicken", active: false, suggest: false},
-        {id:3, name: "egg", active: false, suggest: false},
-        {id:4, name: "planType1", active: false, suggest: false},
-        {id:5, name: "planType2", active: false, suggest: false},
-        {id:6, name: "Mushroom", active: false, suggest: false},
+        {id:1, name: "pork", active: false, suggest: true},
+        {id:2, name: "chicken", active: false, suggest: true},
+        {id:3, name: "egg", active: false, suggest: true},
+        {id:4, name: "planType1", active: false, suggest: true},
+        {id:5, name: "planType2", active: false, suggest: true},
+        {id:6, name: "Mushroom", active: false, suggest: true},
       ],
       dataActive: {id:0, name: "",active:true, suggest: false}
     }
@@ -57,11 +57,9 @@ class App extends Component {
   }
 
   update(e){
-    if(e.target.value[0]!=' '){
       this.setState({
         someText: e.target.value
-      });
-    }
+      })
   }
 
   render(){
